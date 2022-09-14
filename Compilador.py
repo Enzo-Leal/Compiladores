@@ -1,105 +1,55 @@
-#OP CODES
-OP_SOMA = 1000
-OP_SUB = 1001
-
-#ESPAÇOS DE MEMORIA
-MEM_A = 0
-MEM_B = 0
-MEM_C = 0
-MEM_D = 0
-MEM_F = 0
-MEM_G = 0
-MEM_H = 0
-MEM_I = 0
-MEM_J = 0
-MEM_K = 0
-
+# OP CODES
+OP_SOMA = 1000  # Soma 2 numeros e adiciona eles na memoria seguinte
+OP_SUB = 1001  # Subtrai 2 numeros e adiciona eles na memoria seguinte
+OP_FIM = 1999  # Fim do programa
+# ESPAÇOS DE MEMORIA
+MEM = []
 
 
 contador_programa = 0
 
+
 def ADICIONAR_MEMORIA():
-    espacoDeMemoria = input("Digite o espaço de memória que deseja adicionar(A-K) \n ou 0 para voltar ao menu: ")
-    match espacoDeMemoria:
-        case "A":
-            print("Digite o valor de A em binario")
-            MEM_A = input()
-            ADICIONAR_MEMORIA()
-        case "B":
-            print("Digite o valor de B em binario")
-            MEM_B = input()
-            ADICIONAR_MEMORIA()
-        case "C":
-            print("Digite o valor de C em binario")
-            MEM_C = input()
-            ADICIONAR_MEMORIA()
-        case "D":
-            print("Digite o valor de D em binario")
-            MEM_D = input()
-            ADICIONAR_MEMORIA()
-        case "F":
-            print("Digite o valor de F em binario")
-            MEM_F = input()
-            ADICIONAR_MEMORIA()
-        case "G":
-            print("Digite o valor de G em binario")
-            MEM_G = input()
-            ADICIONAR_MEMORIA()
-        case "H":
-            print("Digite o valor de H em binario")
-            MEM_H = input()
-            ADICIONAR_MEMORIA()
-        case "I":
-            print("Digite o valor de I em binario")
-            MEM_I = input()
-            ADICIONAR_MEMORIA()
-        case "J":
-            print("Digite o valor de J em binario")
-            MEM_J = input()
-            ADICIONAR_MEMORIA()
-        case "K":
-            print("Digite o valor de K em binario")
-            MEM_K = input()
-            ADICIONAR_MEMORIA()
-        case "0":
-            main()
-        case _:
-            print("Opção inválida")
-            ADICIONAR_MEMORIA()
-
-
-
-def SOMA():
     global contador_programa
+    MEM.append(input("Digite o valor de MEM_A: "))
     contador_programa += 1
-    MEM_A_DEC = int(MEM_A)
+    MEM.append(input("Digite o valor de MEM_B: "))
     contador_programa += 1
-    MEM_B_DEC = int(MEM_B)
+    MEM.append(input("Digite o valor de MEM_C: "))
     contador_programa += 1
-    MEM_C_DEC = MEM_A_DEC + MEM_B_DEC
-    contador_programa += 1
-    MEM_C = bin(MEM_C_DEC)
-    contador_programa += 1
-    print("O resultado da soma é: ", MEM_C)
-
+    MEM.append(input("Digite o valor de MEM_D: "))
+    print("Memoria adicionada com sucesso")
     return contador_programa
+
+
+def Ciclo_de_instrucoes():
+    global contador_programa
+
+    print("Ciclo de instruções iniciado")
+    if MEM[contador_programa] == OP_SOMA:
+        while MEM != OP_FIM:
+            contador_programa += 1
+            MEM[contador_programa +
+                2] = bin(MEM[contador_programa]) + bin(MEM[contador_programa + 1])
+            contador_programa += 1
+    print("FIM")
 
 
 def main():
     print("Compilador iniciado")
     print("1 - Adicionar a memoria")
-    print("2 - Para SOMAR MEM_A a MEM_B e guardar o resultado em MEM_C")
-    print("3 - Para SUBTRAIR MEM_A a MEM_B e guardar o resultado em MEM_C")
     OPCAO_MENU = input("Digite a opção desejada: ")
 
     match OPCAO_MENU:
         case "1":
-            ADICIONAR_MEMORIA();
+            ADICIONAR_MEMORIA()
+            main()
         case "2":
-            SOMA();
+            Ciclo_de_instrucoes()
 
         case "3":
-            print("Subtração")
+            print("DUMP de memoria\n MEM_A = ", MEM[0], "\n MEM_B = ", MEM[1], "\n MEM_C = ", MEM[2], "\n MEM_D = ", MEM[3], "\n MEM_E = ",
+                  MEM[4], "\n MEM_F = ", MEM[5], "\n MEM_G = ", MEM[6], "\n MEM_H = ", MEM[7], "\n MEM_I = ", MEM[8], "\n MEM_J = ")
         case _:
             print("Opção inválida")
 

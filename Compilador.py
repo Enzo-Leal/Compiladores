@@ -1,7 +1,5 @@
 # OP CODES
-OP_SOMA = 1000  # Soma 2 numeros e adiciona eles na memoria seguinte
-OP_SUB = 1001  # Subtrai 2 numeros e adiciona eles na memoria seguinte
-OP_FIM = 1999  # Fim do programa
+
 # ESPAÇOS DE MEMORIA
 MEM = []
 
@@ -12,11 +10,8 @@ contador_programa = 0
 def ADICIONAR_MEMORIA():
     global contador_programa
     MEM.append(input("Digite o valor de MEM_A: "))
-    contador_programa += 1
     MEM.append(input("Digite o valor de MEM_B: "))
-    contador_programa += 1
     MEM.append(input("Digite o valor de MEM_C: "))
-    contador_programa += 1
     MEM.append(input("Digite o valor de MEM_D: "))
     print("Memoria adicionada com sucesso")
     return contador_programa
@@ -25,14 +20,32 @@ def ADICIONAR_MEMORIA():
 def Ciclo_de_instrucoes():
     global contador_programa
 
+    OP_SOMA = 1000  # Soma 2 numeros e adiciona eles na memoria seguinte
+    OP_SUB = 1001  # Subtrai 2 numeros e adiciona eles na memoria seguinte
+    OP_FIM = 1999  # Fim do programa
+
     print("Ciclo de instruções iniciado")
-    if MEM[contador_programa] == OP_SOMA:
-        while MEM != OP_FIM:
-            contador_programa += 1
-            MEM[contador_programa +
-                2] = bin(MEM[contador_programa]) + bin(MEM[contador_programa + 1])
-            contador_programa += 1
-    print("FIM")
+
+    while contador_programa < len(MEM):
+        print(MEM[contador_programa])
+        if MEM[contador_programa] == int(OP_SOMA):
+            while MEM != OP_FIM:
+                contador_programa += 1
+                MEM[contador_programa +
+                    2] = bin(MEM[contador_programa]) + bin(MEM[contador_programa + 1])
+                contador_programa += 1
+                main()
+
+        elif MEM[contador_programa] == OP_SUB:
+            while MEM != OP_FIM:
+                contador_programa += 1
+                MEM[contador_programa +
+                    2] = bin(MEM[contador_programa]) - bin(MEM[contador_programa + 1])
+                contador_programa += 1
+                main()
+
+
+        print("FIM")
 
 
 def main():

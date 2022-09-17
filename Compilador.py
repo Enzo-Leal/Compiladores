@@ -2,29 +2,19 @@
 OP_SOMA = 1000  # Soma 2 numeros e adiciona eles na memoria seguinte
 OP_SUB = 1001  # Subtrai 2 numeros e adiciona eles na memoria seguinte
 OP_FIM = 1999  # Fim do programa
+
 # ESPAÇOS DE MEMORIA
-MEM = []
+MEM_SOMA = ["1000","0001", "0010", "0011", "0100", "0101", "0110", "0111"]
+MEM_SUB = ["1001","0001", "0010", "0011", "0100", "0101", "0110", "0111"]
 
-
+# Contador de programa
 contador_programa = 0
 
 
-def ADICIONAR_MEMORIA():
-    global contador_programa
-    MEM.append(input("Digite o valor de MEM_A: "))
-    contador_programa += 1
-    MEM.append(input("Digite o valor de MEM_B: "))
-    contador_programa += 1
-    MEM.append(input("Digite o valor de MEM_C: "))
-    contador_programa += 1
-    MEM.append(input("Digite o valor de MEM_D: "))
-    print("Memoria adicionada com sucesso")
-    return contador_programa
-
-
-def Ciclo_de_instrucoes():
+def Ciclo_de_instrucoes(ESCOLHA_MEMORIA):
     global contador_programa
 
+    
     print("Ciclo de instruções iniciado")
     if MEM[contador_programa] == OP_SOMA:
         while MEM != OP_FIM:
@@ -36,22 +26,28 @@ def Ciclo_de_instrucoes():
 
 
 def main():
-    print("Compilador iniciado")
-    print("1 - Adicionar a memoria")
-    OPCAO_MENU = input("Digite a opção desejada: ")
+    print("Compilador iniciado\n Digite a instrução desejada\n\n\n 1 - Soma\n 2 - Subtração\n 3 - DUMP de memoria 4 - FIM")
 
-    match OPCAO_MENU:
-        case "1":
-            ADICIONAR_MEMORIA()
-            main()
-        case "2":
-            Ciclo_de_instrucoes()
+    while True:
+        OPCAO_MENU = input("Digite a opção desejada: ")
 
-        case "3":
-            print("DUMP de memoria\n MEM_A = ", MEM[0], "\n MEM_B = ", MEM[1], "\n MEM_C = ", MEM[2], "\n MEM_D = ", MEM[3], "\n MEM_E = ",
-                  MEM[4], "\n MEM_F = ", MEM[5], "\n MEM_G = ", MEM[6], "\n MEM_H = ", MEM[7], "\n MEM_I = ", MEM[8], "\n MEM_J = ")
-        case _:
-            print("Opção inválida")
+        match OPCAO_MENU:
+            case "1":
+                Ciclo_de_instrucoes(MEM_SOMA)
+                main()
+            case "2":
+                Ciclo_de_instrucoes(MEM_SUB)
+
+            case "3":
+                print("DUMP de memoria\n MEM_A = ", MEM[0], "\n MEM_B = ", MEM[1], "\n MEM_C = ", MEM[2], "\n MEM_D = ", MEM[3], "\n MEM_E = ",
+                      MEM[4], "\n MEM_F = ", MEM[5], "\n MEM_G = ", MEM[6], "\n MEM_H = ", MEM[7], "\n MEM_I = ", MEM[8], "\n MEM_J = ")
+            
+            case "4":
+                print("FIM")
+                break
+            
+            case _:
+                print("Opção inválida")
 
 
 main()

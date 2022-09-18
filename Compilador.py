@@ -1,10 +1,7 @@
 # OP CODES
-<<<<<<< HEAD
 OP_SOMA = 1000  # Soma 2 numeros e adiciona eles na memoria seguinte
 OP_SUB = 1001  # Subtrai 2 numeros e adiciona eles na memoria seguinte
 OP_FIM = 1999  # Fim do programa
-=======
->>>>>>> bb11cdee70ace357ff2b6d852120629852685b82
 
 # ESPAÇOS DE MEMORIA
 MEM_SOMA = ["1000","0001", "0010", "0011", "0100", "0101", "0110", "0111"]

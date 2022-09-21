@@ -2,7 +2,7 @@
 
 
 # ESPAÇOS DE MEMORIA
-MEM = [0b1000, 0b0001, 0b0010, 0b0011 , 0b0100, 0b0101, 0b0110, 0b0111]
+MEM = [0b1000, 0b0001, 0b0010, 0b0000 , 0b0100, 0b0101, 0b0110, 0b0111]
 #MEM_SUB = ["1001", "0001", "0010", "0011", "0100", "0101", "0110", "0111"]
 
 # Contador de programa
@@ -20,11 +20,12 @@ def Ciclo_de_instrucoes(ESCOLHA_MEMORIA):
 
     
     while True:
+        
         if ESCOLHA_MEMORIA[contador_programa] == OP_SOMA:
             print("Soma")
             MEM[3] = bin(MEM[1] + MEM[2])
             contador_programa += 1
-            print("MEM_A = ", bin(MEM[0]), "\n MEM_B = ", bin(MEM[1]), "\n MEM_C = ", bin(MEM[2]), "\n MEM_D = ", MEM[3], "\n MEM_E = ", bin(MEM[4]), "\n MEM_F = ", bin(MEM[5]))
+            print(" MEM_A = ", bin(MEM[0]), "\n MEM_B = ", bin(MEM[1]), "\n MEM_C = ", bin(MEM[2]), "\n MEM_D = ", MEM[3], "\n MEM_E = ", bin(MEM[4]), "\n MEM_F = ", bin(MEM[5]))
             main()
 
 

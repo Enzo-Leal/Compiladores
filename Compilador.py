@@ -1,3 +1,15 @@
+#nao pode pedir imput, tem que roodar direto
+#ler de um arquivo 
+
+
+#na atividade 2 traduzir um arquivo para o trabalho 1
+
+#opcao fazer um programa só, fazendo um ponto no meio pra exibir i resultado
+
+#ideia de OPCODE, zerar um espaço de memoria, lipar as memorias
+
+
+
 # OP CODES
 
 
@@ -46,7 +58,7 @@ def Ciclo_de_instrucoes(ESCOLHA_MEMORIA):
    
 
 def main():
-    print("Compilador iniciado\n Digite a instrução desejada\n\n\n 1 - Soma\n 2 - Subtração\n 3 - DUMP de memoria 4 - FIM")
+    print("Compilador iniciado\n Digite a instrução desejada\n\n\n 1 - Soma\n 2 - Subtração\n 3 - DUMP de memoria \n 4 - FIM")
 
     while True:
         OPCAO_MENU = input("Digite a opção desejada: ")

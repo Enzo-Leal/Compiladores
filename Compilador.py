@@ -9,7 +9,7 @@
 # ideia de OPCODE, zerar um espaço de memoria, lipar as memorias
 # gerar um erro e gravar em um arquivo de log em um espaço de memoria
 
-from winreg import REG_BINARY
+#from winreg import REG_BINARY
 
 
 MEM_INTRUCOES = []
@@ -21,10 +21,12 @@ contador_programa = 0
 
 def MEM_BIN_PARA_MEM_INSTRUCOES():
 
-    with open("instrucoes.bin", "r") as instrucoes:
+    with open("instrucoes_txt.txt", "r") as instrucoes:
+        
         for linha in instrucoes:
             MEM_INTRUCOES.append(linha)
-
+            for i in range(len(MEM_INTRUCOES)):
+                MEM_INTRUCOES[i] 
 
 # while MEM_INTRUCOES:
     #    print(MEM_INTRUCOES)

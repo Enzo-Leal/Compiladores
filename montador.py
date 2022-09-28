@@ -1,35 +1,35 @@
-# nao pode pedir imput, tem que roodar direto
-# ler de um arquivo
+# adicionar 2 no espaco de memoria 5
+# COD_ADC 2 5
+# Soma -> 2(passar pra bin) -> adicionar no txt
 
 
-# na atividade 2 traduzir um arquivo para o trabalho 1
-
-# opcao fazer um programa só, fazendo um ponto no meio pra exibir i resultado
-
-# ideia de OPCODE, zerar um espaço de memoria, lipar as memorias
-# gerar um erro e gravar em um arquivo de log em um espaço de memoria
-
-
-#               Manual de instrucoes
-
-# OPCodes:
-#   10000001 - Soma - Soma os 2 endereços de memória e armazena o resultado no endereço de memória seguinte
-#   10000010 - Subtracao - Subtrai os 2 endereços de memória e armazena o resultado no endereço de memória seguinte
-#   10000011 - Multiplicacao - Multiplica os 2 endereços de memória e armazena o resultado no endereço de memória seguinte
-#   10000100 - Divisao - Divide os 2 endereços de memória e armazena o resultado no endereço de memória seguinte
-#   10000101 - JMP - Pula para o endereço de memória indicado
-#   10000110 - Clear Memory - limpa o proximo endereço de memoria
-#   11111111 - Exit - sai do programa
-#
+OP_SOMA = 10000001
+OP_SUB = 10000010
+OP_MULT = 10000011
+OP_DIV = 10000100
+OP_JMP = 10000101
+OP_CLEAR_MEM = 10000110
+OP_EXIT = 11111111
 
 
-MEM_INTRUCOES = []
-# Contador de programa
-contador_programa = 0
+proxima_instrucao = 0
+
+INSTRUCOES = []
+
+CODIGO_SAIDA = []
 
 
-def CONVERTER_RESULTADO(RESULTADO):
-    match RESULTADO:
+def LER_INSTRUCOES():
+    with open("instrucoes.txt") as f:
+        for line in f:
+            INSTRUCOES.append(line.strip())
+
+    print(INSTRUCOES)
+
+
+# fazer uma funcao para converter de decimal para binario
+def CONVERTER_DECIMAL_BINARIO(decimal):
+    match decimal:
         case 0:
             return "00000000"
         case 1:
@@ -287,152 +287,90 @@ def CONVERTER_RESULTADO(RESULTADO):
         case 127:
             return "01111111"
 
-
-def MEM_BIN_PARA_MEM_INSTRUCOES():
-
-    with open("instrucoes_txt.txt", "r") as instrucoes:
-
-        for linha in instrucoes:
-            MEM_INTRUCOES.append(linha.strip())
+def ADICIONAR_ARQUIVO_SAIDA():
+    with open("saida_montador.txt", "w") as arquivo:
+        for line in CODIGO_SAIDA:
+            arquivo.write("".join(line) + "\n")
 
 
-def LER_INSTRUCAO():
-    global contador_programa
+def ADC():
+    global proxima_instrucao
+    proxima_instrucao += 1
 
-    TAMANHO_MEM_INTRUCOES = len(MEM_INTRUCOES)
+    VALOR = int(INSTRUCOES[proxima_instrucao])
+    print("valor antes de converter: ", VALOR)
+    VALOR = CONVERTER_DECIMAL_BINARIO(VALOR)
+    print("ADC", VALOR)
+    CODIGO_SAIDA.append(VALOR)
 
-    OP_SOMA = 10000001
-    OP_SUB = 10000010
-    OP_MULT = 10000011
-    OP_DIV = 10000100
-    OP_JMP = 10000101
-    OP_CLEAR_MEM = 10000110
-    OP_EXIT = 11111111
+def SUM():
+    global proxima_instrucao
 
-    while contador_programa <= TAMANHO_MEM_INTRUCOES:
+    CODIGO_SAIDA.append("10000001")
+    # adicionar a instrução de soma
+    #with open("saida_montador.txt", "w") as txt_file:
+    #    txt_file.write(str(OP_SOMA)+"\n")
+    ADC()
+    ADC()
+    ADC()
+    # adicionar os valores a serem somados
 
-        if MEM_INTRUCOES[contador_programa] == str(OP_SOMA):
-            SOMA()
+
+def EXECUTAR_INSTRUCOES():
+    global proxima_instrucao
+
+    TAMANHO_INSTRUCAO = len(INSTRUCOES)
+
+  # Instruções de controle
+
+    COD_ADC = "ADC"
+    COD_SOMA = "SUM"
+    COD_SUB = "SUB"
+    COD_MULT = "MULT"
+    COD_DIV = "DIV"
+    COD_JMP = "JMP"
+    COD_CLEAR = "CLEAR"
+    COD_EXIT = "EXIT"
+
+    while proxima_instrucao <= TAMANHO_INSTRUCAO:
+        if INSTRUCOES[proxima_instrucao] == COD_SOMA:
+            print("SOMA")
+            SUM()
+            proxima_instrucao += 1
+        elif INSTRUCOES[proxima_instrucao] == COD_SUB:
+            print("SUB")
+            proxima_instrucao += 1
+        elif INSTRUCOES[proxima_instrucao] == COD_MULT:
+            print("MULT")
+            proxima_instrucao += 1
+        elif INSTRUCOES[proxima_instrucao] == COD_DIV:
+            print("DIV")
+            proxima_instrucao += 1
+        elif INSTRUCOES[proxima_instrucao] == COD_JMP:
+            print("JMP")
+            proxima_instrucao += 1
+        elif INSTRUCOES[proxima_instrucao] == COD_CLEAR:
+            print("CLEAR")
+            proxima_instrucao += 1
+        elif INSTRUCOES[proxima_instrucao] == COD_EXIT:
+            print("EXIT")
             break
-        elif MEM_INTRUCOES[contador_programa] == str(OP_SUB):
-            SUB()
-            break
-        elif MEM_INTRUCOES[contador_programa] == str(OP_MULT):
-            MULT()
-            break
-        elif MEM_INTRUCOES[contador_programa] == str(OP_DIV):
-            DIV()
-            break
-        elif MEM_INTRUCOES[contador_programa] == str(OP_JMP):
-            JMP()
-            break
-        elif MEM_INTRUCOES[contador_programa] == str(OP_CLEAR_MEM):
-            CLEAR_MEM()
-            break
-        elif MEM_INTRUCOES[contador_programa] == str(OP_EXIT):
-            # colocar aqui a funcao escrever no arquivo de saida
-            with open("output.txt", "w") as txt_file:
-                for line in MEM_INTRUCOES:
-                    txt_file.write("".join(line) + "\n")
-            break
+        elif INSTRUCOES[proxima_instrucao] == COD_ADC:
+            print("ADC")
+            ADC()
+            proxima_instrucao += 1
 
         else:
-            contador_programa += 1
-            LER_INSTRUCAO()
+            proxima_instrucao += 1
+            EXECUTAR_INSTRUCOES()
             break
-
-
-def SOMA():
-    global contador_programa
-    contador_programa += 1
-    REG_A = int(MEM_INTRUCOES[contador_programa])
-    contador_programa += 1
-    REG_B = int(MEM_INTRUCOES[contador_programa])
-    contador_programa += 1
-    MEM_INTRUCOES[contador_programa] = CONVERTER_RESULTADO(REG_A + REG_B)
-    contador_programa += 1
-
-    print("DUMP da memoria após soma\n")
-    print(MEM_INTRUCOES)
-    LER_INSTRUCAO()
-
-
-def SUB():
-    global contador_programa
-    contador_programa += 1
-    REG_A = int(MEM_INTRUCOES[contador_programa])
-    contador_programa += 1
-    REG_B = int(MEM_INTRUCOES[contador_programa])
-    contador_programa += 1
-    MEM_INTRUCOES[contador_programa] = CONVERTER_RESULTADO(REG_A - REG_B)
-    contador_programa += 1
-
-    print("DUMP da memoria após subtração\n")
-    print(MEM_INTRUCOES)
-
-    LER_INSTRUCAO()
-
-
-def MULT():
-    global contador_programa
-    contador_programa += 1
-    REG_A = int(MEM_INTRUCOES[contador_programa])
-    contador_programa += 1
-    REG_B = int(MEM_INTRUCOES[contador_programa])
-    contador_programa += 1
-    MEM_INTRUCOES[contador_programa] = CONVERTER_RESULTADO(REG_A * REG_B)
-    contador_programa += 1
-
-    print("DUMP da memoria após multiplicação\n")
-    print(MEM_INTRUCOES)
-
-    LER_INSTRUCAO()
-
-
-def DIV():
-    global contador_programa
-    contador_programa += 1
-    REG_A = int(MEM_INTRUCOES[contador_programa])
-    contador_programa += 1
-    REG_B = int(MEM_INTRUCOES[contador_programa])
-    contador_programa += 1
-    MEM_INTRUCOES[contador_programa] = CONVERTER_RESULTADO(REG_A / REG_B)
-    contador_programa += 1
-
-    print("DUMP da memoria após divisão\n")
-    print(MEM_INTRUCOES)
-
-    LER_INSTRUCAO()
-
-
-def JMP():
-    global contador_programa
-    contador_programa += 1
-    contador_programa = int(MEM_INTRUCOES[contador_programa])
-    print("DUMP da memoria após pular o endereço\n")
-    print(MEM_INTRUCOES)
-    LER_INSTRUCAO()
-
-
-def CLEAR_MEM():
-    global contador_programa
-    contador_programa += 1
-    MEM_INTRUCOES[contador_programa] = "00000000"
-    contador_programa += 1
-    print("DUMP da memoria após clear\n")
-    print(MEM_INTRUCOES)
-    LER_INSTRUCAO()
 
 
 def main():
-    global contador_programa
-
-    MEM_BIN_PARA_MEM_INSTRUCOES()
-
-    print("DUMP da memoria inicial\n")
-    print(MEM_INTRUCOES)
-
-    LER_INSTRUCAO()
+    print("Iniciando programa")
+    LER_INSTRUCOES()
+    EXECUTAR_INSTRUCOES()
+    ADICIONAR_ARQUIVO_SAIDA()
 
 
 main()

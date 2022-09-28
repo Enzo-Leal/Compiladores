@@ -1,33 +1,9 @@
-# nao pode pedir imput, tem que roodar direto
-# ler de um arquivo
-
-
-# na atividade 2 traduzir um arquivo para o trabalho 1
-
-# opcao fazer um programa só, fazendo um ponto no meio pra exibir i resultado
-
-# ideia de OPCODE, zerar um espaço de memoria, lipar as memorias
-# gerar um erro e gravar em um arquivo de log em um espaço de memoria
-
-
-#               Manual de instrucoes
-
-# OPCodes:
-#   10000001 - Soma - Soma os 2 endereços de memória e armazena o resultado no endereço de memória seguinte
-#   10000010 - Subtracao - Subtrai os 2 endereços de memória e armazena o resultado no endereço de memória seguinte
-#   10000011 - Multiplicacao - Multiplica os 2 endereços de memória e armazena o resultado no endereço de memória seguinte
-#   10000100 - Divisao - Divide os 2 endereços de memória e armazena o resultado no endereço de memória seguinte
-#   10000101 - JMP - Pula para o endereço de memória indicado
-#   10000110 - Clear Memory - limpa o proximo endereço de memoria
-#   11111111 - Exit - sai do programa
-#
-
-
+#Array que vai armazenar as instrucoes
 MEM_INTRUCOES = []
 # Contador de programa
 contador_programa = 0
 
-
+#Função utilizada para converter inteiros em binarios para que as operacoes possam ser realizadas
 def CONVERTER_RESULTADO(RESULTADO):
     match RESULTADO:
         case 0:
@@ -287,7 +263,7 @@ def CONVERTER_RESULTADO(RESULTADO):
         case 127:
             return "01111111"
 
-
+#Função que pegar as instrucoes do arquivo "3_saida_montador.txt" e adiciona ao array MEM_INSTRUCOES
 def MEM_BIN_PARA_MEM_INSTRUCOES():
 
     with open("3_saida_montador.txt", "r") as instrucoes:
@@ -295,7 +271,7 @@ def MEM_BIN_PARA_MEM_INSTRUCOES():
         for linha in instrucoes:
             MEM_INTRUCOES.append(linha.strip())
 
-
+#Função que irá percorrer a memoria e executar o que for nescessario
 def LER_INSTRUCAO():
     global contador_programa
 
@@ -351,9 +327,6 @@ def SOMA():
     contador_programa += 1
     MEM_INTRUCOES[contador_programa] = CONVERTER_RESULTADO(REG_A + REG_B)
     contador_programa += 1
-
-    print("DUMP da memoria após soma\n")
-    print(MEM_INTRUCOES)
     LER_INSTRUCAO()
 
 
@@ -366,10 +339,6 @@ def SUB():
     contador_programa += 1
     MEM_INTRUCOES[contador_programa] = CONVERTER_RESULTADO(REG_A - REG_B)
     contador_programa += 1
-
-    print("DUMP da memoria após subtração\n")
-    print(MEM_INTRUCOES)
-
     LER_INSTRUCAO()
 
 
@@ -382,10 +351,6 @@ def MULT():
     contador_programa += 1
     MEM_INTRUCOES[contador_programa] = CONVERTER_RESULTADO(REG_A * REG_B)
     contador_programa += 1
-
-    print("DUMP da memoria após multiplicação\n")
-    print(MEM_INTRUCOES)
-
     LER_INSTRUCAO()
 
 
@@ -398,10 +363,6 @@ def DIV():
     contador_programa += 1
     MEM_INTRUCOES[contador_programa] = CONVERTER_RESULTADO(REG_A / REG_B)
     contador_programa += 1
-
-    print("DUMP da memoria após divisão\n")
-    print(MEM_INTRUCOES)
-
     LER_INSTRUCAO()
 
 
@@ -409,8 +370,6 @@ def JMP():
     global contador_programa
     contador_programa += 1
     contador_programa = int(MEM_INTRUCOES[contador_programa])
-    print("DUMP da memoria após pular o endereço\n")
-    print(MEM_INTRUCOES)
     LER_INSTRUCAO()
 
 
@@ -419,20 +378,14 @@ def CLEAR_MEM():
     contador_programa += 1
     MEM_INTRUCOES[contador_programa] = "00000000"
     contador_programa += 1
-    print("DUMP da memoria após clear\n")
-    print(MEM_INTRUCOES)
     LER_INSTRUCAO()
 
 
 def main():
-    global contador_programa
-
+    print("Programa iniciado")
     MEM_BIN_PARA_MEM_INSTRUCOES()
-
-    print("DUMP da memoria inicial\n")
-    print(MEM_INTRUCOES)
-
     LER_INSTRUCAO()
+    print("Programa finalizado")
 
 
 main()

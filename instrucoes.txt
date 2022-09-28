@@ -1,20 +1,67 @@
-ADC
-5
-1
-ADC
-4
-2
-SUM
-0
-SUB
-3
-MULT
-4
-DIV
-5
-JMP
-6
-CLEAR_MEM
-7
-EXIT
-8
+        Manual de instruções do usuário
+
+Instruções disponiveis do montador:
+
+  ADC   -> Adiciona o valor no endereco de memoria especificado 
+  SUM   -> Adiciona o codigo de soma no endereco de memoria especificado
+  SUB   -> Adiciona o codigo de subtracao no endereco de memoria especificado
+  MUTL  -> Adiciona o codigo de multiplicacao no endereco de memoria especificado
+  DIV   -> Adiciona o codigo de divisao no endereco de memoria especificado
+  JMP   -> Adiciona o codigo de pulo no endereco de memoria especificado
+  CLEAR -> Adiciona o codigo de limpeza no endereco de memoria especificado
+  EXIT  -> Adiciona o codigo de saida no endereco de memoria especificado, dando fim a execucao do programa
+
+
+Como inserir instrucoes para o montador:
+  No arquivo de entrada, insira o codigo da instrucao e o endereco de memoria que ela deve ser inserida, separando as instruções pulando a linha.
+  Exemplo:
+    ADC
+    1
+    0
+    SUM
+    1
+    SUB
+    2
+    MUTL
+    3
+    DIV
+    4
+    JMP
+    5
+    CLEAR
+    6
+    EXIT 
+    7
+
+
+  Após inserir as instruções, salve o arquivo e execute o montador.
+  O arquivo de saida do montador se chama "3_saida_montador".
+  As posicoes com valor "0" sao as posicoes de memoria que nao foram utilizadas.
+  esse arquivo tambem é a entrada do compilador, logo nao precisamos colocar as instrucoes no arquivo de entrada do compilador.
+  O arquivo de saida do compilador se chama "5_output".
+
+
+  Caso queira adicionar as instrucoes para o compilador somente digite os codigos de instrucao e o valor, caso exista, separando as instruções pulando a linha.
+  Exemplo:
+  10000001
+  5
+  4
+  0
+  10000010
+  6
+  2
+  0
+  11111111
+
+
+  Caso o nao queira utilizar um espaço de memoria para uma instrucao ou valor, basta colocar o valor "0" no lugar do endereco de memoria.
+
+  Instruções disponiveis do compilador:
+  
+  10000001 ->  Soma o valor nos proximos 2 enderecos de memoria e armazena no terceiro endereco de memoria
+  10000010 ->  Subtrai o valor nos proximos 2 enderecos de memoria e armazena no terceiro endereco de memoria
+  10000011 ->  Multiplica o valor nos proximos 2 enderecos de memoria e armazena no terceiro endereco de memoria
+  10000100 ->  Divide o valor nos proximos 2 enderecos de memoria e armazena no terceiro endereco de memoria
+  10000101 ->  Pula para o endereço de memória indicado
+  10000110 ->  Limpa o valor no endereco de memoria indicado
+  11111111 ->  Encerra a execução do programa

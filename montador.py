@@ -2,6 +2,11 @@
 # COD_ADC 2 5
 # Soma -> 2(passar pra bin) -> adicionar no txt
 
+#Soma -> soma os 2 enderecos de memoria subsequentes do informado e armazena no 3 endereco de memoria 
+
+
+from operator import index
+
 
 OP_SOMA = 10000001
 OP_SUB = 10000010
@@ -16,7 +21,49 @@ proxima_instrucao = 0
 
 INSTRUCOES = []
 
-CODIGO_SAIDA = []
+CODIGO_SAIDA = [00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000,
+                00000000]
+
 
 
 def LER_INSTRUCOES():
@@ -287,10 +334,11 @@ def CONVERTER_DECIMAL_BINARIO(decimal):
         case 127:
             return "01111111"
 
+
 def ADICIONAR_ARQUIVO_SAIDA():
     with open("saida_montador.txt", "w") as arquivo:
         for line in CODIGO_SAIDA:
-            arquivo.write("".join(line) + "\n")
+            arquivo.write(str(line) + "\n")
 
 
 def ADC():
@@ -298,22 +346,69 @@ def ADC():
     proxima_instrucao += 1
 
     VALOR = int(INSTRUCOES[proxima_instrucao])
-    print("valor antes de converter: ", VALOR)
     VALOR = CONVERTER_DECIMAL_BINARIO(VALOR)
-    print("ADC", VALOR)
-    CODIGO_SAIDA.append(VALOR)
+    proxima_instrucao += 1
+    CODIGO_SAIDA[int(INSTRUCOES[proxima_instrucao])] = VALOR
+
+
+#def PROX_MEMORIA():
+#    global proxima_instrucao
+#    proxima_instrucao += 1
+#    CODIGO_SAIDA.insert(INSTRUCOES[proxima_instrucao],"00000000")
 
 def SUM():
     global proxima_instrucao
+    proxima_instrucao += 1
+    POS_MEM_INSTRUCAO = int(INSTRUCOES[proxima_instrucao])
+    CODIGO_SAIDA[int(POS_MEM_INSTRUCAO)] = int(OP_SOMA)
+    
+    
 
-    CODIGO_SAIDA.append("10000001")
-    # adicionar a instrução de soma
-    #with open("saida_montador.txt", "w") as txt_file:
-    #    txt_file.write(str(OP_SOMA)+"\n")
-    ADC()
-    ADC()
-    ADC()
-    # adicionar os valores a serem somados
+
+def SUB():
+    global proxima_instrucao
+    proxima_instrucao += 1
+    POS_MEM_INSTRUCAO = int(INSTRUCOES[proxima_instrucao])
+    CODIGO_SAIDA[int(POS_MEM_INSTRUCAO)] = int(OP_SUB)
+
+
+
+def MULT():
+    global proxima_instrucao
+    proxima_instrucao += 1
+    POS_MEM_INSTRUCAO = int(INSTRUCOES[proxima_instrucao])
+    CODIGO_SAIDA[int(POS_MEM_INSTRUCAO)] = int(OP_MULT)
+    
+
+
+def DIV():
+    global proxima_instrucao
+    proxima_instrucao += 1
+    POS_MEM_INSTRUCAO = int(INSTRUCOES[proxima_instrucao])
+    CODIGO_SAIDA[int(POS_MEM_INSTRUCAO)] = int(OP_DIV)
+    
+
+
+def JMP():
+    global proxima_instrucao
+    proxima_instrucao += 1
+    POS_MEM_INSTRUCAO = int(INSTRUCOES[proxima_instrucao])
+    CODIGO_SAIDA[int(POS_MEM_INSTRUCAO)] = int(OP_JMP)
+    
+
+
+def CLEAR_MEM():
+    global proxima_instrucao
+    proxima_instrucao += 1
+    POS_MEM_INSTRUCAO = int(INSTRUCOES[proxima_instrucao])
+    CODIGO_SAIDA[int(POS_MEM_INSTRUCAO)] = int(OP_CLEAR_MEM)
+    
+
+def EXIT():
+    global proxima_instrucao
+    proxima_instrucao += 1
+    POS_MEM_INSTRUCAO = int(INSTRUCOES[proxima_instrucao])
+    CODIGO_SAIDA[int(POS_MEM_INSTRUCAO)] = int(OP_EXIT)
 
 
 def EXECUTAR_INSTRUCOES():
@@ -323,42 +418,40 @@ def EXECUTAR_INSTRUCOES():
 
   # Instruções de controle
 
-    COD_ADC = "ADC"
-    COD_SOMA = "SUM"
+    COD_ADC = "ADC"  
+    COD_SOMA = "SUM"  
     COD_SUB = "SUB"
     COD_MULT = "MULT"
     COD_DIV = "DIV"
     COD_JMP = "JMP"
-    COD_CLEAR = "CLEAR"
+    COD_CLEAR = "CLEAR_MEM"
     COD_EXIT = "EXIT"
 
     while proxima_instrucao <= TAMANHO_INSTRUCAO:
         if INSTRUCOES[proxima_instrucao] == COD_SOMA:
-            print("SOMA")
             SUM()
             proxima_instrucao += 1
         elif INSTRUCOES[proxima_instrucao] == COD_SUB:
-            print("SUB")
+            SUB()
             proxima_instrucao += 1
         elif INSTRUCOES[proxima_instrucao] == COD_MULT:
-            print("MULT")
+            MULT()
             proxima_instrucao += 1
         elif INSTRUCOES[proxima_instrucao] == COD_DIV:
-            print("DIV")
+            DIV()
             proxima_instrucao += 1
         elif INSTRUCOES[proxima_instrucao] == COD_JMP:
-            print("JMP")
+            JMP()
             proxima_instrucao += 1
         elif INSTRUCOES[proxima_instrucao] == COD_CLEAR:
-            print("CLEAR")
+            CLEAR_MEM()
             proxima_instrucao += 1
-        elif INSTRUCOES[proxima_instrucao] == COD_EXIT:
-            print("EXIT")
-            break
         elif INSTRUCOES[proxima_instrucao] == COD_ADC:
-            print("ADC")
             ADC()
             proxima_instrucao += 1
+        elif INSTRUCOES[proxima_instrucao] == COD_EXIT:
+            EXIT()
+            break
 
         else:
             proxima_instrucao += 1

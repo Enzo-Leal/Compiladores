@@ -271,52 +271,6 @@ def MEM_BIN_PARA_MEM_INSTRUCOES():
         for linha in instrucoes:
             MEM_INTRUCOES.append(linha.strip())
 
-#Função que irá percorrer a memoria e executar o que for nescessario
-def LER_INSTRUCAO():
-    global contador_programa
-
-    TAMANHO_MEM_INTRUCOES = len(MEM_INTRUCOES)
-
-    OP_SOMA = 10000001
-    OP_SUB = 10000010
-    OP_MULT = 10000011
-    OP_DIV = 10000100
-    OP_JMP = 10000101
-    OP_CLEAR_MEM = 10000110
-    OP_EXIT = 11111111
-
-    while contador_programa <= TAMANHO_MEM_INTRUCOES:
-
-        if MEM_INTRUCOES[contador_programa] == str(OP_SOMA):
-            SOMA()
-            break
-        elif MEM_INTRUCOES[contador_programa] == str(OP_SUB):
-            SUB()
-            break
-        elif MEM_INTRUCOES[contador_programa] == str(OP_MULT):
-            MULT()
-            break
-        elif MEM_INTRUCOES[contador_programa] == str(OP_DIV):
-            DIV()
-            break
-        elif MEM_INTRUCOES[contador_programa] == str(OP_JMP):
-            JMP()
-            break
-        elif MEM_INTRUCOES[contador_programa] == str(OP_CLEAR_MEM):
-            CLEAR_MEM()
-            break
-        elif MEM_INTRUCOES[contador_programa] == str(OP_EXIT):
-            # colocar aqui a funcao escrever no arquivo de saida
-            with open("5_output.txt", "w") as txt_file:
-                for line in MEM_INTRUCOES:
-                    txt_file.write(str(line) + "\n")
-            break
-
-        else:
-            contador_programa += 1
-            LER_INSTRUCAO()
-            break
-
 
 def SOMA():
     global contador_programa
@@ -381,6 +335,53 @@ def CLEAR_MEM():
     LER_INSTRUCAO()
 
 
+#Função que irá percorrer a memoria e executar o que for nescessario
+def LER_INSTRUCAO():
+    global contador_programa
+
+    TAMANHO_MEM_INTRUCOES = len(MEM_INTRUCOES)
+
+    OP_SOMA = 10000001
+    OP_SUB = 10000010
+    OP_MULT = 10000011
+    OP_DIV = 10000100
+    OP_JMP = 10000101
+    OP_CLEAR_MEM = 10000110
+    OP_EXIT = 11111111
+
+    while contador_programa <= TAMANHO_MEM_INTRUCOES:
+
+        if MEM_INTRUCOES[contador_programa] == str(OP_SOMA):
+            SOMA()
+            break
+        elif MEM_INTRUCOES[contador_programa] == str(OP_SUB):
+            SUB()
+            break
+        elif MEM_INTRUCOES[contador_programa] == str(OP_MULT):
+            MULT()
+            break
+        elif MEM_INTRUCOES[contador_programa] == str(OP_DIV):
+            DIV()
+            break
+        elif MEM_INTRUCOES[contador_programa] == str(OP_JMP):
+            JMP()
+            break
+        elif MEM_INTRUCOES[contador_programa] == str(OP_CLEAR_MEM):
+            CLEAR_MEM()
+            break
+        elif MEM_INTRUCOES[contador_programa] == str(OP_EXIT):
+            # colocar aqui a funcao escrever no arquivo de saida
+            with open("5_output.txt", "w") as txt_file:
+                for line in MEM_INTRUCOES:
+                    txt_file.write(str(line) + "\n")
+            break
+
+        else:
+            contador_programa += 1
+            LER_INSTRUCAO()
+            break
+
+        
 def main():
     print("Programa iniciado")
     MEM_BIN_PARA_MEM_INSTRUCOES()

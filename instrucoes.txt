@@ -13,7 +13,7 @@ Instruções disponiveis do montador:
 
 
 Como inserir instrucoes para o montador:
-  No arquivo de entrada, insira o codigo da instrucao e o endereco de memoria que ela deve ser inserida, separando as instruções pulando a linha.
+No arquivo de entrada, insira o codigo da instrucao e o endereco de memoria que ela deve ser inserida, separando as instruções pulando a linha, evitando memorias vazias desnecessaris dentro do sistema.
   Exemplo:
     ADC
     1
@@ -36,7 +36,7 @@ Como inserir instrucoes para o montador:
 
   Após inserir as instruções, salve o arquivo e execute o montador.
   O arquivo de saida do montador se chama "3_saida_montador".
-  As posicoes com valor "0" sao as posicoes de memoria que nao foram utilizadas.
+  As posicoes com valor "00000000" sao as posicoes de memoria que nao foram utilizadas.
   esse arquivo tambem é a entrada do compilador, logo nao precisamos colocar as instrucoes no arquivo de entrada do compilador.
   O arquivo de saida do compilador se chama "5_output".
 
